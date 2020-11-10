@@ -1,43 +1,37 @@
 require_relative '../environment.rb'
-
+require_relative './house.rb'
 class Api
 
-    #attr_accessor :query
+    attr_accessor :page_num, :user_region
 
-    # def initialize(query)
-    #     @query = query
-    # end
+    @@user_region = []
 
-    def self.fetch_houses
-        url = "https://www.anapioficeandfire.com/api/houses"
+    def initialize(user_region)
+        #@page_num = page_num
+        @user_region = user_region
+    end
+
+    def self.fetch_regions
+        url = "https://www.anapioficeandfire.com/api/houses?page1&pageSize=10&region=#{@user_region}"
         uri = URI(url)
         response = Net::HTTP.get(uri)
-        #response_body = response.body
-        # => "[{\"url\":\"https://www.anapioficeandfire.com/api/houses/1\",\"name\":\"House Algood\",
-        hash_house = JSON.parse(response) # or response_body ?
-        # => [{"url"=>"https://www.anapioficeandfire.com/api/houses/1", "name"=>"House Algood", 
-        # @array_of_houses = hash[""]
+        hash_house = JSON.parse(response)
     end
 
-    def self.create_houses # @array_of_houses.each
-        self.fetch_houses.each {|house| House.new(house["name"], house["region"], house["words"], house["coatOfArms"], house["founded"], house["diedOut"], house["ancestralWeapons"]) } # = var
-        #puts var
+    def create_regions(user_region)
+        self.fetch_regions.each do |region|
+            
+        #Regions.new(region["Iron Islands", "Dorne", "The Vale", "The Reach", "The Riverlands", "The Crownlands", "The Stormlands", "The Westerlands", "The Neck", "Beyond the Wall"])
+        end
     end
-    # https://youtu.be/_Au8iv6ZIkY?t=3062
-    # send method? Iterate over hash and use metaprogramming?
+
 end
-
-puts "anything"
-# house_instance = House.new(name: house["name"])
-# house_instance.region = house["region"]
-# house_instance.words = house["words"]
-# house_instance.coat = house["coatOfArms"]
-# house_instance.founded = house["founded"]
-# house_instance.diedout = house["diedOut"]
-# house_instance.weapons = house["ancestralWeapons"]
-
-
 
 # api = Api.new("characters")
 # binding.pry
 # "Let us pry."
+# Api.fetch_houses
+# Api.create_houses
+
+puts "api"
+

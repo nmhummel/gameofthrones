@@ -20,14 +20,16 @@ class House
     def self.all
         @@all
     end
-    
-    # def self.display_characters
-    #     puts "Please choose one of the following characters"
+
+    # def Api.create_houses # @array_of_houses.each
+    #     self.fetch_houses.each {|house| House.new(house["name"], house["region"], house["words"], house["coatOfArms"], house["founded"], house["diedOut"], house["ancestralWeapons"]) } # = var
+    #     #puts var
+    #   #  binding.pry
     # end
 
 end
 
-
+puts "house"
 
 
 

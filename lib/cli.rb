@@ -3,6 +3,9 @@ require 'pry'
 
 class Cli
 
+    
+    @@saved_houses = []
+
     def start
         puts "The Houses of Game of Thrones"
         puts "Here there be dragons...eventually."
@@ -24,7 +27,8 @@ class Cli
         puts "    ///-._ _ _ _ _ _ _}^ - - - - ~                     ~--,   .-~"
         puts "                                                         /.-' "
         puts "==================================================================="
-        Api.fetch_houses
+
+        
         self.menu
     end
     # a new step needs a new method
@@ -32,33 +36,54 @@ class Cli
 
     def menu
         puts "If you're going to play the Game of Thrones, you must know more about the teams."
+        sleep(1)
         puts "Would you like to see who's playing? (type yes or no)"
         user_input = gets.strip.downcase
         if user_input == "yes"
             puts "Wise decision."
-            display_list_of_houses
+            sleep(1)
+            puts "What region are you in right now? If you aren't sure, ask a local. I'll wait."
+            sleep(3)
+
+            Regions.display_regions # displayed like 1. Vale, etc.
+
+            Regions.ask_user_for_region
+
+
             ask_user_for_house
             sleep(1)
             menu
-            # elsif user_inout == 'search'
+            # elsif user_input == 'search'
             # list all search options
             # menu (recursion)
         else
-            puts "Farewell. I expect I'll see your head on a spike."
+            if @@saved_houses.empty?
+                puts "Farewell. With no allies, I expect I'll see your head on a spike in the near future."
+            else 
+                puts "You have chosen the following houses as your allies:"
+                @@saved_houses
+            end
         end
     end
 
+    def ask_user_for_region
+        Api.new(page_num, user_region)
+    end
+
+    #  display_list_of_houses
     def display_list_of_houses
+        Api.new(page_num, user_region)
         House.all.each.with_index(1) do |house, index|
             puts "#{index}. #{house.name}"
         end
     end
     # .each is best for printing out
 
+
     def ask_user_for_house
         chosen_index = gets.strip.to_i - 1
          #max_limit = House.all.length - 1
-        if !index.between(0,max_limit)  # get actual number once you get it printing, includes edge cases 
+        if !chosen_index.between(0,House.all.length)  # get actual number once you get it printing, includes edge cases 
             puts "Invalid choice. Try again."
             ask_user_for_house
         end
@@ -78,16 +103,15 @@ class Cli
         puts "Ancestral Weapons: " +house.ancestralWeapons
     end
 
-    # def choose_characters
-    #     if Book.all.empty? 
-    #         Character.create_characters
-    #     else
-    # # if book.all.length == 0, call method and end
-    # # else use book.all method and print out
-    # # Book.create_books
-    #     end
-    # end
-
+    def liked_houses
+        puts "Do you think you could be allies? (choose yes or no)"
+        house = gets.strip
+        if house == "yes"
+            @@saved_houses << house
+        else puts "Very well. Let's find you another House."
+            menu
+        end
+    end
 
 end
 puts "cli"
