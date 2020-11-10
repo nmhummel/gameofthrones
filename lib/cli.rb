@@ -21,14 +21,14 @@ class Cli
         puts "Would you like to see who's playing? (type yes or no)"
         user_input = gets.strip.downcase 
         # user inputs y/n
-        if user_input == "no"
+        if user_input == "no"   # all this works - do not touch!!!
             if @@saved_houses.empty?
                 puts "Farewell. With no allies, I expect I'll see your head on a spike in the near future."
             else 
                 puts "You have chosen the following houses as your allies:"
-                @@saved_houses
+                puts @@saved_houses
             end
-        else
+        else  # still working
             puts "Wise decision."
             sleep(1)
             puts "What region are you in right now? If you aren't sure, ask a local. I'll wait."

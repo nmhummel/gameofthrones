@@ -6,6 +6,7 @@ gem 'pry'
 gem 'json'
 gem 'httparty'
 gem 'open-uri'
+gem 'net-http'
 
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
