@@ -12,10 +12,13 @@ class Region
     def self.display_regions  # WORKS - DO NOT TOUCH
         puts "Please choose one of the following Regions:"
         self.all.each_with_index{|region, index| puts "#{index + 1}. #{region}"}
+
     end
 
     def def ask_user_for_region
-        Api.new(page_num, user_region)
+        user_input = gets.strip
+        self.all.each {|region| puts "Aww yes, the terrible beauty that is #{region}."}
+        puts "Here are some houses who you may want to form an alliance."
     end
 
 

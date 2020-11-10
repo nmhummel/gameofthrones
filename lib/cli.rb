@@ -9,27 +9,8 @@ class Cli
     def start
         puts "The Houses of Game of Thrones"
         puts "Here there be dragons...eventually."
-        puts "                 ^    ^ "
-        puts "                / \  // \ "
-        puts "  |\___/|      /   \// \ \ "
-        puts "  /O  O  \__  /    // | \ \ "
-        puts " /     /  \/_/    //  |  \  \ "
-        puts " @___@'    \/_   //   |   \  \ "
-        puts "    |       \/_ //    |    \   \ "
-        puts "    |        \///     |     \    \ "
-        puts "   _|_ /   )  //      |      \    _\ "
-        puts "  '/,_ _ _/  ( ; -.   |    _ _\.-~     .-~~~^-. "
-        puts " ,-{        _      `-.|.-~-.          .~        `. "
-        puts " '/\      /                  ~-. _ .-~    .-~^-.  \\ "
-        puts "    `.   {            }                  /       \  \ "
-        puts "  .----~-.\        \-'                .~          \  `.   \^-."
-        puts "  ///.----..>    c   \            _ -~              `.  ^-`   ^-_"
-        puts "    ///-._ _ _ _ _ _ _}^ - - - - ~                     ~--,   .-~"
-        puts "                                                         /.-' "
         puts "==================================================================="
-
-        
-        self.menu
+        menu
     end
     # a new step needs a new method
     # start should be sparse - welcome, grab info, take us to another method in CLI
@@ -38,45 +19,37 @@ class Cli
         puts "If you're going to play the Game of Thrones, you must know more about the teams."
         sleep(1)
         puts "Would you like to see who's playing? (type yes or no)"
-        user_input = gets.strip.downcase
-        if user_input == "yes"
-            puts "Wise decision."
-            sleep(1)
-            puts "What region are you in right now? If you aren't sure, ask a local. I'll wait."
-            sleep(3)
-
-            Regions.display_regions # displayed like 1. Vale, etc.
-
-            Regions.ask_user_for_region
-
-
-            ask_user_for_house
-            sleep(1)
-            menu
-            # elsif user_input == 'search'
-            # list all search options
-            # menu (recursion)
-        else
+        user_input = gets.strip.downcase 
+        # user inputs y/n
+        if user_input == "no"
             if @@saved_houses.empty?
                 puts "Farewell. With no allies, I expect I'll see your head on a spike in the near future."
             else 
                 puts "You have chosen the following houses as your allies:"
                 @@saved_houses
             end
-        end
-    end
+        else
+            puts "Wise decision."
+            sleep(1)
+            puts "What region are you in right now? If you aren't sure, ask a local. I'll wait."
+            sleep(5)
+            Region.display_regions # lists all regions displayed like 1. Vale, etc.
+            Region.ask_user_for_region  # error here
+            display_list_of_houses
 
-    def ask_user_for_region
-        Api.new(page_num, user_region)
+            ask_user_for_house
+
+            sleep(1)
+            menu
+
+            # elsif user_input == 'search'
+            # list all search options
+            # menu (recursion)
+        end
     end
 
     #  display_list_of_houses
-    def display_list_of_houses
-        Api.new(page_num, user_region)
-        House.all.each.with_index(1) do |house, index|
-            puts "#{index}. #{house.name}"
-        end
-    end
+
     # .each is best for printing out
 
 
@@ -98,8 +71,6 @@ class Cli
         puts "Region: " + house.region
         puts "Words: " + house.words
         puts "Coat of Arms: " + house.coatOfArms
-        puts "Year Founded: " + words.founded
-        puts "Year it Died Out: " + house.diedOut
         puts "Ancestral Weapons: " +house.ancestralWeapons
     end
 
