@@ -21,7 +21,7 @@ class Character
 
     def self.display_characters
         puts "Please choose one of the following characters"
-
+    end
 
 
 end 

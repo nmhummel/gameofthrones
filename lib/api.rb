@@ -12,14 +12,19 @@ class Api
         url = "https://www.anapioficeandfire.com/api/houses"
         uri = URI(url)
         response = Net::HTTP.get(uri)
-        hash_house = JSON.parse(response)
+        #response_body = response.body
+        # => "[{\"url\":\"https://www.anapioficeandfire.com/api/houses/1\",\"name\":\"House Algood\",
+        hash_house = JSON.parse(response) # or response_body ?
+        # => [{"url"=>"https://www.anapioficeandfire.com/api/houses/1", "name"=>"House Algood", 
+        # @array_of_houses = hash[""]
     end
 
-    def self.create_houses
-        stuff = self.fetch_houses.each {|house| House.new(house["name"], house["region"], house["words"], house["coatOfArms"], house["founded"], house["diedOut"], house["ancestralWeapons"]) }
-        puts stuff
+    def self.create_houses # @array_of_houses.each
+        self.fetch_houses.each {|house| House.new(house["name"], house["region"], house["words"], house["coatOfArms"], house["founded"], house["diedOut"], house["ancestralWeapons"]) } # = var
+        #puts var
     end
-binding.pry
+    # https://youtu.be/_Au8iv6ZIkY?t=3062
+    # send method? Iterate over hash and use metaprogramming?
 end
 
 puts "anything"
@@ -31,26 +36,7 @@ puts "anything"
 # house_instance.diedout = house["diedOut"]
 # house_instance.weapons = house["ancestralWeapons"]
 
-# def fetch_books
-#     url = "https://www.anapioficeandfire.com/api/books"
-#     uri = URI(url)
-#     response = Net::HTTP.get(uri)
-#     books = JSON.parse(response)
-#     sorted_books = books.each do |book| 
-#         self.new(book["name"], book["numberOfPages"], book["characters"], book["released"])
-#     end
-    
-# end
 
-# def fetch_characters
-#     url = "https://www.anapioficeandfire.com/api/characters"
-#     uri = URI(url)
-#     response = Net::HTTP.get(uri)
-#     characters = JSON.parse(response)
-#     sorted_characters = characters.each do |character| 
-#         self.new(character["name"], character["gender"], character["culture"], character["aliases"], character["allegiances"])
-#     end
-# end
 
 # api = Api.new("characters")
 # binding.pry
