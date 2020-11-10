@@ -1,8 +1,8 @@
 require_relative '../environment.rb'
-require_relative './house.rb'
+
 class Api
 
-    attr_accessor :page_num, :user_region
+    attr_accessor :user_region
 
     @@user_region = []
 
@@ -27,11 +27,6 @@ class Api
 
 end
 
-# api = Api.new("characters")
-# binding.pry
-# "Let us pry."
-# Api.fetch_houses
-# Api.create_houses
 
 puts "api"
 

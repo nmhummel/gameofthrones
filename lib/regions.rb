@@ -24,20 +24,3 @@ end
 
 puts "regions"
 
-
-    #     house = self.all[index]
-    #     # binding.pry
-    #     puts "#{house.name} -- #{house.author}"
-    #     puts "#{article.content}"
-
-    #     puts "Would you like to view this article in browser?"
-    #     puts "1. Yes"
-    #     puts "2. No"
-
-    #     input = gets.chomp
-    #     index = input.to_i - 1
-
-    #     if index == 0
-    #         system("open #{article.url}")
-    #     end
-    # end
