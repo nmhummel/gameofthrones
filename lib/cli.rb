@@ -1,5 +1,4 @@
 require_relative '../environment.rb'
-require 'pry'
 
 class Cli
 
