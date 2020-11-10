@@ -1,7 +1,10 @@
+require_relative '../environment.rb'
 
-class Players
+class Character
 
     attr_accessor :name, :gender, :culture, :aliases, :allegiances
+
+    @@all = []
 
     def initialize(name, gender, culture, aliases, allegiances)
         @name = name
@@ -9,7 +12,16 @@ class Players
         @culture = culture
         @aliases = aliases
         @allegiances = allegiances
+        @@all << self
     end
 
+    def self.all
+        @@all
+    end
 
-end
+    def self.display_characters
+        puts "Please choose one of the following characters"
+
+
+
+end 
