@@ -22,6 +22,4 @@ class House
     
 end
 
-puts "house"
-
 

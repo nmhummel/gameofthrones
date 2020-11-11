@@ -19,9 +19,6 @@ class Api
 end
 
 
-puts "api"
-
-#house_instance (house["name"], house["region"], house["words"], house["seats"], house["coatOfArms"], house["ancestralWeapons"])
 
 #attr_accessor :query
 
@@ -30,9 +27,3 @@ puts "api"
 # end
 
 
-# house_instance.name = house["name"]
-# house_instance.region = house["region"]
-# house_instance.words = house["words"]
-# house_instance.seats = house["seats"]
-# house_instance.coat = house["coatOfArms"]
-# house_instance.weapons = house["ancestralWeapons"] 
