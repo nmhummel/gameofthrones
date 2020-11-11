@@ -2,54 +2,81 @@ require_relative '../environment.rb'
 
 class Cli
 
-    
-    @@saved_houses = []
+    @@all = []
 
-    def start
-        puts "The Houses of Game of Thrones"
-        puts "Here there be dragons...eventually."
-        puts "==================================================================="
-        menu
-    end
     # a new step needs a new method
     # start should be sparse - welcome, grab info, take us to another method in CLI
 
-    def menu
-        puts "If you're going to play the Game of Thrones, you must know more about the teams."
-        sleep(1)
-        puts "Would you like to see who's playing? (type yes or no)"
+    def start
+        puts "A WELCOME GUIDE TO THE NORTH"
+        #insert bantor
+        puts "Would you like to meet some potential allies? (type yes or no)"
         user_input = gets.strip.downcase 
         # user inputs y/n
         if user_input == "no"   # all this works - do not touch!!!
-            if @@saved_houses.empty?
-                puts "Farewell. With no allies, I expect I'll see your head on a spike in the near future."
+            if @@all.empty?
+                puts "Farewell, then. With no allies, I expect you'll be killed in less than a fortnight."
             else 
                 puts "You have chosen the following houses as your allies:"
-                puts @@saved_houses
+                puts @@all[0]
+                puts "Now go forth and prosper!"
             end
         else  # still working
             puts "Wise decision."
             sleep(1)
-            puts "What region are you in right now? If you aren't sure, ask a local. I'll wait."
-            sleep(5)
-            Region.display_regions # lists all regions displayed like 1. Vale, etc.
-            Region.ask_user_for_region  # error here
-            display_list_of_houses
+            House.display_houses
 
-            ask_user_for_house
+            # index = self.initial_input
+            # query = Cli.topics[index]
+            # api = Api.new(query)
+            # api.create_articles
+            # Article.display_articles
+            # index = self.secondary_input
 
-            sleep(1)
-            menu
+            # Article.display_article(index)
+            # self.another_article?
+        end
+            # House.display_houses # lists all regions displayed like 1. Vale, etc.
+            # index = initial_input # gets their selection and validates it's 1-10
+  
+            #region_query = Api.new(user_region) # left off here
+            # RETURNING #<Api:0x000055689657cde0 @user_region=nil> with multiple requests of region_query
+
+
+            # Region.ask_user_for_region  # error here
+       
+            #display_list_of_houses
+
+            #ask_user_for_house
+
+            #sleep(1)
+            #menu
 
             # elsif user_input == 'search'
             # list all search options
             # menu (recursion)
-        end
+      
     end
 
     #  display_list_of_houses
 
     # .each is best for printing out
+    def input_to_index(input)
+        input.to_i - 1
+    end
+
+    def house_input
+        input = gets.strip  #user puts # for house
+        index = input_to_index(input)
+
+        if !index.between?(0,28)
+            puts "Please select a number between 1 and 10."
+            self.initial_input
+        else
+            index
+        end
+    end
+
 
 
     def ask_user_for_house
@@ -63,21 +90,12 @@ class Cli
         display_house_details(house_instance)
     end
 
-    def display_house_details(house_instance)
-        sleep(1)
-        puts "\n"
-        puts house.name
-        puts "Region: " + house.region
-        puts "Words: " + house.words
-        puts "Coat of Arms: " + house.coatOfArms
-        puts "Ancestral Weapons: " +house.ancestralWeapons
-    end
 
     def liked_houses
         puts "Do you think you could be allies? (choose yes or no)"
         house = gets.strip
         if house == "yes"
-            @@saved_houses << house
+            @@all << house
         else puts "Very well. Let's find you another House."
             menu
         end

@@ -16,9 +16,8 @@ class Region
     end
 
     def def ask_user_for_region
-        user_input = gets.strip
         self.all.each {|region| puts "Aww yes, the terrible beauty that is #{region}."}
-        puts "Here are some houses who you may want to form an alliance."
+        puts "Here are some houses with whom you may want to form an alliance."
     end
 
 

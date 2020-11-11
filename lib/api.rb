@@ -1,24 +1,24 @@
-require_relative '../environment.rb'
-#require_relative 'house.rb'
+#require_relative '../environment.rb'
+require_relative 'house.rb'
 
 class Api
 
-    attr_accessor :user_region
+    #attr_accessor :query
 
-    def initialize(user_region)
-        @user_region = user_region
-    end
+    # def initialize(user_region)
+    #     @user_region = user_region
+    # end
 
     def self.fetch_houses
-        url = "https://www.anapioficeandfire.com/api/houses?page1&pageSize=10&region=#{@user_region}"
+        url = "https://www.anapioficeandfire.com/api/houses?pageSize=70&region=the%20north&hasSeats=true&hasWords=true"
         uri = URI(url)
         response = Net::HTTP.get(uri)
-        hash_house = JSON.parse(response)
+        hash_dorne = JSON.parse(response)
     end
 
-    def self.create_houses(user_region)
+    def self.create_houses
         self.fetch_houses.each do |house|
-            House.new(house["name"], house["region"], house["words"], house["coatOfArms"], house["ancestralWeapons"])
+            House.new(house["name"], house["region"], house["words"], house["seats"], house["coatOfArms"], house["ancestralWeapons"])
         end
     end
 #binding.pry
