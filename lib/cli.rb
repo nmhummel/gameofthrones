@@ -94,12 +94,12 @@ class Cli
         # print out their choice
         # house = self.all[index]
         puts "\n" # new line
-        puts "Name: " + house.name.to_s
-        puts "Region: " + house.region.to_s
-        puts "Words: " + house.words.to_s
-        puts "Seats: " + house.seats.to_s
-        puts "Coat of Arms: " + house.coatOfArms.to_s
-        puts "Ancestral Weapons: " + house.ancestralWeapons.to_s
+        puts "Name: " + house.name
+        puts "Region: " + house.region
+        puts "Words: " + house.words
+        puts "Seats: " + house.seats.join(", ") # Seats: ["Widow's Watch"]
+        puts "Coat of Arms: " + house.coatOfArms
+        puts "Ancestral Weapons: " + house.ancestralWeapons.join(", ") # Ancestral Weapons: [""]
     end
 
 
@@ -159,7 +159,7 @@ class Cli
             puts "You have chosen the following houses as your allies:"
             sleep(1)
             puts "\n" # new line
-            puts @@all
+            puts @@all.uniq
             puts "\n" # new line
             sleep(1)
             puts "Now go forth and introduce yourself. Good luck!"
