@@ -20,8 +20,6 @@ class House
 
 
     
-
-#binding.pry
 end
 
 puts "house"
