@@ -18,80 +18,60 @@ class Cli
                 puts "Farewell, then. With no allies, I expect you'll be killed in less than a fortnight."
             else 
                 puts "You have chosen the following houses as your allies:"
-                puts @@all[0]
+                puts @@all
                 puts "Now go forth and prosper!"
             end
         else  # still working
             puts "Wise decision."
             sleep(1)
-            House.display_houses
-
-            # index = self.initial_input
-            # query = Cli.topics[index]
-            # api = Api.new(query)
-            # api.create_articles
-            # Article.display_articles
-            # index = self.secondary_input
-
-            # Article.display_article(index)
+            api = Api.new
+            Api.create_houses   # error in terminal on this line
+            self.display_houses # prints all houses with 1-9
+            index = self.house_input    # user chooses # for house 1-9 and it prints the house chosen
+                # DON'T NEED? query = Cli.topics[index]
+                # OR HERE? api = Api.new
+                # OR HERE? api.create_houses
+                # DON'T NEED? index = self.secondary_input
+            self.display_chosen_house(index)
             # self.another_article?
         end
-            # House.display_houses # lists all regions displayed like 1. Vale, etc.
-            # index = initial_input # gets their selection and validates it's 1-10
-  
-            #region_query = Api.new(user_region) # left off here
-            # RETURNING #<Api:0x000055689657cde0 @user_region=nil> with multiple requests of region_query
-
-
-            # Region.ask_user_for_region  # error here
-       
-            #display_list_of_houses
-
-            #ask_user_for_house
-
-            #sleep(1)
-            #menu
-
-            # elsif user_input == 'search'
-            # list all search options
-            # menu (recursion)
-      
     end
-
-    #  display_list_of_houses
 
     # .each is best for printing out
     def input_to_index(input)
         input.to_i - 1
     end
 
+    def self.display_houses # was on house.rb
+        puts "Let's take a look at some of the houses that are held in the highest regard. Please choose by entering the number of the House you wish to explore:"
+        House.all.each.with_index(1) do |house, index|
+            puts "#{index}. #{house.name}"
+        end
+    end
+
     def house_input
         input = gets.strip  #user puts # for house
         index = input_to_index(input)
-
-        if !index.between?(0,28)
-            puts "Please select a number between 1 and 10."
-            self.initial_input
+        if !index.between?(0,8)
+            puts "Please select a number between 1 and 9."
+            self.house_input
         else
             index
         end
     end
 
-
-
-    def ask_user_for_house
-        chosen_index = gets.strip.to_i - 1
-         #max_limit = House.all.length - 1
-        if !chosen_index.between(0,House.all.length)  # get actual number once you get it printing, includes edge cases 
-            puts "Invalid choice. Try again."
-            ask_user_for_house
-        end
-        house_instance = House.all[index]
-        display_house_details(house_instance)
+    def self.display_chosen_house(index) # was on house.rb
+        house = self.all[index]
+        puts "Name: " + house.name
+        puts "Region: " + house.region
+        puts "Words: " + house.words
+        puts "Seats: " + house.seats
+        puts "Coat of Arms: " + house.coatOfArms
+        puts "Ancestral Weapons: " + house.ancestralWeapons
     end
 
 
-    def liked_houses
+    def save_houses
         puts "Do you think you could be allies? (choose yes or no)"
         house = gets.strip
         if house == "yes"
@@ -100,6 +80,11 @@ class Cli
             menu
         end
     end
+ 
+    def self.clear # was on house.rb
+        @@all.clear
+    end
+
 
 end
 puts "cli"
