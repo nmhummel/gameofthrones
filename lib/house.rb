@@ -4,7 +4,7 @@ class House
 
     @@all = []
 
-    def initialize(name, region, words, titles, seats, coatOfArms, ancestralWeapons="None on record.")
+    def initialize(name, region, words, titles, seats, coatOfArms, ancestralWeapons)
         @name = name
         @region = region
         @words = words

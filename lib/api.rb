@@ -7,14 +7,14 @@ class Api
         uri = URI(url)
         response = Net::HTTP.get(uri) 
         house_array = JSON.parse(response) # takes string and makes hash
-        house_array.each do |house| # initialize a new house
+        house_array.each do |house| # initialize a new house and assign attributes to it
             house_instance = House.new(house["name"], house["region"], house["words"], house["titles"], house["seats"], house["coatOfArms"], house["ancestralWeapons"])
-            # assign attributes to it
-            # puts house.ancestralWeapons[0] == "" ? "None on record." : house.ancestralWeapons.join(", ")
         end
     end
 
 end
+
+
 
 
 
