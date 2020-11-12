@@ -1,4 +1,3 @@
-# require bundler?
 
 require 'pry'
 require 'json'
@@ -11,4 +10,3 @@ require_relative './lib/api.rb'
 require_relative './lib/house.rb'
 require_relative './lib/cli.rb'
 
-# .rb is optional

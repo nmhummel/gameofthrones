@@ -13,29 +13,6 @@ class Cli
     # welcome, grab info, and take us to other method that controls main object
     def start
         puts "A WELCOME GUIDE TO THE NORTH"   
-        sleep(1)    
-        puts "So there's a big hole in The Wall and you came through it. Now what?"
-        puts "======================================================================"
-        puts "---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+--"
-        puts "o | o   o | o   o | o   o | o   o | o   o | o   o | o   o | o   o | o"
-        puts "---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+--"
-        puts "o | o   o | o   o | o   o | o   o | o   o | o   o | o   o | o   o | o"
-        puts "---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+--"
-        puts "o   o | o   o | o   o | o   o | o   o | o   o | o   o | o   o | o   o"
-        puts "---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+--"
-        puts "o | o   o | o   o | o   o | o   o | o   o | o   o | o   o | o   o | o"
-        puts "---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+--"
-        puts "o   o | o   o | o   o | o   o | o   o | o   o | o   o | o   o | o   o"
-        puts "---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+--"
-        puts "o | o   o | o   o | o   o | o   o | o   o | o   o | o   o | o   o | o"
-        puts "---+---+---+---+---+---+---+---+---+---+---+---+---+             --+--"
-        puts "o   o | o   o | o   o | o   o | o   o | o   o | o               o   o"
-        puts "---+---+---+---+---+---+---+---+---+---+---+---+---+-            --+--"
-        puts "o | o   o | o   o | o   o | o   o | o   o | o   o |             o | o"
-        puts "---+---+---+---+---+---+---+---+---+---+---+---+---+-           ---+--"
-        puts "\n" # new line
-        puts "The Game of Thrones has ended, but that doesn't mean you can just march into The North without some allies."
-        puts "You really need to become familiar with the different Houses around here. Good thing I'm here to help."
         Api.fetch_houses
         self.menu
     end
@@ -58,6 +35,7 @@ class Cli
             user_input == "no"
             exit_program
         else 
+            sleep(1)
             puts "Please select a valid choice."
             menu
         end
@@ -75,16 +53,16 @@ class Cli
     end
          
    def ask_user_for_house_choice
-        house_input = gets.strip.to_i #user puts # for house
-        index = house_input - 1 # corresponds with our array index numbers
+        house_input = gets.strip.to_i - 1 #user puts # for house, corresponds with our array index numbers
         #validate their input
         max = House.all.length - 1
-        until index.between?(0,max) 
+        until house_input.between?(0,max) 
+            sleep(1)
             puts "Please select a valid number."
-            index = gets.strip.to_i - 1
+            house_input = gets.strip.to_i - 1
         end
         # Find their House choice 
-        house_instance = House.all[index]
+        house_instance = House.all[house_input]
         # call the method that will print details
         display_house_details(house_instance)
         save_chosen_house(house_instance)
@@ -92,20 +70,24 @@ class Cli
 
     def  display_house_details(house) # argument so we know their choice still - arg better
         # print out their choice
-        # house = self.all[index]
         puts "\n" # new line
         puts "Name: " + house.name
         puts "Region: " + house.region
-        puts "Words: " + house.words
-        puts "Seats: " + house.seats.join(", ") # Seats: ["Widow's Watch"]
+        puts "Words: " + house.words.to_s
+        puts "Titles: " + house.titles.join(", ") 
+        puts "Seats: " + house.seats.join(", ") 
         puts "Coat of Arms: " + house.coatOfArms
-        puts "Ancestral Weapons: " + house.ancestralWeapons.join(", ") # Ancestral Weapons: [""]
+        #binding.pry
+        print "Ancestral Weapons: "
+        puts house.ancestralWeapons[0] == "" ? "None on record." : house.ancestralWeapons.join(", ")
+        binding.pry
+       # puts output
     end
 
 
     def save_chosen_house(house)
         puts "\n" # new line
-        puts "Do you think you could be allies? (choose yes or no)"
+        puts "Do you think you could be allies? (type yes or no)"
         puts "\n" # new line
         input = gets.strip.downcase
         if input == "yes"
@@ -121,44 +103,14 @@ class Cli
     end
 
  
- 
     def exit_program
         if @@all.empty?
             puts "\n" # new line
             puts "Farewell, then. With no allies, I expect you'll be dead in less than a fortnight."
-            puts "\n" # new line
-            sleep(2)
-            puts "                               __   "
-            puts "                            .d$$b   "
-            puts "                         .' TO$;\   "
-            puts "                       /  : TP._;   "
-            puts "                     / _.;  :Tb|   "
-            puts "                    /   /   ;j$j   "
-            puts "                _.-^       d$$$$^   "
-            puts "               .' ..       d$$$$;   "
-            puts "              /  /P'      d$$$$P. - }   "
-            puts "             /   ^      .d$$$P'^^^^}   "
-            puts "           .'           `T$P^^^^^^^  :   "
-            puts "      ._.'      _.'                ;   "
-            puts "    `-.-^.-'-' ._.       _.-    .-   "
-            puts "  `.-^ _____  ._              .-   "
-            puts " -(.g$$$$$$$b.              .'   "
-            puts "    ^^T$$$P^)            .(:   "
-            puts "       _/  -^  /.^         /:/;   "
-            puts "      ._.'-'`-^  ^)/         /; / ; "
-            puts "   `-.- ^..--^   ^ /         /  ;   "
-            puts "  .-^ ..--^^        -^          :   "
-            puts " ..--^^--.-^         (\      .-(\   "
-            puts "   ..--^^              `-\(\/;`   "
-            puts "  _.                      :   "
-            puts "                         ;`-   "
-            puts "                        :\   "
-            puts "                       ;  bug   "
             exit
         else 
             puts "You have chosen the following houses as your allies:"
             sleep(1)
-            puts "\n" # new line
             puts @@all.uniq
             puts "\n" # new line
             sleep(1)
