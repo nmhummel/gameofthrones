@@ -17,8 +17,6 @@ class House
     def self.all
         @@all
     end
-
-
     
 end
 

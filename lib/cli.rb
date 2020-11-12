@@ -55,11 +55,11 @@ class Cli
             ask_user_for_house_choice
             menu
         elsif          
-            puts "Please select a valid choice."
-            menu
-        else 
             user_input == "no"
             exit_program
+        else 
+            puts "Please select a valid choice."
+            menu
         end
     end
 

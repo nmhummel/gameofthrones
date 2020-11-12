@@ -12,7 +12,6 @@ class Api
         house_array.each do |house| # initialize a new house
             house_instance = House.new(house["name"], house["region"], house["words"], house["seats"], house["coatOfArms"], house["ancestralWeapons"])
             # assign attributes to it
-
         end
     end
 
