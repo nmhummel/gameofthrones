@@ -42,29 +42,29 @@ class Cli
     def display_regions
         House.clear_all
         puts "\n"
-        puts "Tell me-- which of the below regions are you interested in? (enter number 1-8)"
+        puts "Tell me-- which of the below regions are you interested in? (enter number 1-8, or 'exit' to be on your way)"
         puts "\n"
         sleep(1)
         @@regions.each_with_index {|region, index| puts "#{index + 1}. #{region}"}
         puts "\n" 
     end
 
-    # def selection_to_index(input)
-    #     input.to_i - 1
-    # end 
+    def selection_to_index(input)
+        input.to_i - 1
+    end 
 
     def regions_input 
         input = gets.strip
         if input == "exit"
             exit_program
         else
-            number = input.to_i - 1
+            number = selection_to_index(input)
             until number.between?(0,8)
                 sleep(1)
                 puts "Please select a valid number."
-                self.regions_input 
+                input = gets.strip
             end
-            input.to_i - 1
+            input.to_i
         end
     end
    
@@ -102,17 +102,16 @@ class Cli
         puts "\n" 
     end
 
-
     def ask_user_for_house_choice 
-        house_input = gets.strip.to_i
-        number = house_input -1
+        input = gets.strip
         max = House.all.length - 1 
-        until number.between?(0,max) 
+        house_input = selection_to_index(input)        
+        until house_input.between?(0,max) 
             sleep(1)
             puts "Please select a valid number."
-            number = gets.strip.to_i -1
+            house_input = gets.strip.to_i - 1
         end
-        house_instance = House.all[number]
+        house_instance = House.all[house_input]
         display_house_details(house_instance)
         save_chosen_house(house_instance)
     end
