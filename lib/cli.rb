@@ -1,8 +1,8 @@
 class Cli
 
-    @@saved_houses = []
-    @@regions = ["Iron Islands", "Dorne", "The Vale", "The Reach", "The Riverlands", "The Crownlands", "The Stormlands", "The Westerlands", "The Neck", "Beyond the Wall"]
+    @@got_regions = ["Iron Islands", "Dorne", "The Vale", "The Reach", "The Riverlands", "The Crownlands", "The Stormlands", "The Westerlands", "The Neck", "Beyond the Wall"]
     # CCCCC
+    @@saved_houses = []
 
     def start
         puts "WELCOME TO WESTEROS" 
@@ -10,28 +10,39 @@ class Cli
         puts "If you're going to play the GoT, you need to know the teams."
         sleep(1)
         puts "Tell me-- which of the below regions are you interested in laying down roots? (enter number 1-10)"
-        self.display_regions # display regions - AAAAA
-        user_input_region = self.regions_input # user inputs - BBBBB
-        query = Cli.regions[user_input_region] # checks validity - CCCCC
-        Api.new(query) # Api.rb new instance/query
+        self.display_regions # display regions - AAAAA  -  ex. 2. Dorne
+        index = self.regions_input # user inputs - BBBBB  -  ex. index = 2
+
+        #query = @@got_regions[index] # checks validity - CCCCC - ex. query = Dorne
+
+        api = Api.new(query) # Api.rb new instance/query
+        api.create_houses
         display_houses # DDDDD
         #self.menu
     end
 
+    def self.got_regions
+        @@got_regions
+    end
+
     def display_regions # AAAAA
-        @@regions.each_with_index {|region, index| puts "#{index + 1}. #{region}"}
+        @@got_regions.each_with_index {|region, index| puts "#{index + 1}. #{region}"}
     end
 
     def regions_input # BBBBB
-        region_input = gets.strip
-        number = selection_to_index(region_input) # DDDDD
-        until input.between?(0,9)
+        input = gets.strip 
+        number = selection_to_index(input) # DDDDD  
+        until number.between?(0,9)
             sleep(1)
             puts "Please select a valid number."
             self.regions_input # BBBBB
         end
     end
 
+    def selection_to_index(input) # DDDDD
+        input.to_i - 1
+    end  
+    
     def display_houses   # EEEEE
         puts "Would you like to meet some potential allies from there? (type yes or no)"
         user_input = gets.strip.downcase 
@@ -44,42 +55,36 @@ class Cli
             puts "\n" 
             display_list_of_houses # FFFFF
             ask_user_for_house_choice # GGGGG
-            menu
+            display_houses # EEEEE
         elsif          
             user_input == "no"
             exit_program # HHHHH
         else 
             sleep(1)
             puts "Please select a valid choice."
-            menu
+            display_houses # EEEEE
         end
     end   
-
-    def selection_to_index(input) # DDDDD
-        input.to_i - 1
-    end  
  
     def display_list_of_houses # FFFFF
-        House.all.each.with_index(1) do |house, index|  
-            puts "#{index}. #{house.name}" 
-        end
+        House.all.each.with_index(1) {|house, index| puts "#{index}. #{house.name}"}
         puts "\n" 
     end
          
    def ask_user_for_house_choice # GGGGG
-        house_input = gets.strip.to_i - 1 
-        max = House.all.length - 1
+        house_input = gets.strip
+        number = selection_to_index(house_input) # DDDDD
         until house_input.between?(0,max) 
             sleep(1)
             puts "Please select a valid number."
             house_input = gets.strip.to_i - 1
         end
         house_instance = House.all[house_input]
-        display_house_details(house_instance) 
-        save_chosen_house(house_instance) 
+        display_house_details(house_instance) # IIIII
+        save_chosen_house(house_instance) # JJJJJ
     end
 
-    def display_house_details(house) 
+    def display_house_details(house) # IIIII
         puts "\n" 
         puts "Name: " + house.name 
         puts "Region: " + house.region
@@ -93,7 +98,7 @@ class Cli
         puts house.ancestralWeapons[0] == "" ? "None on record." : house.ancestralWeapons.join(", ")
     end
 
-    def save_chosen_house(house)
+    def save_chosen_house(house) #JJJJJ
         puts "\n" 
         puts "Do you think you could be allies? (type yes or no)"
         puts "\n" 
