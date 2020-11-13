@@ -19,15 +19,6 @@ class House
         @@all
     end
     
-    # def empty?
-    #     @@all.map do |attribute|
-    #         if attribute.ancestralWeapons == "" || attribute.blank?
-    #             puts "None on record."
-    #         else
-    #             attribute
-    #         end
-    #     end
-    # end
 
 end
 

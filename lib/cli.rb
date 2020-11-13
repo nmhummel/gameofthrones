@@ -1,16 +1,39 @@
 class Cli
 
-    @@all = []
+    @@saved_houses = []
+    @@regions = ["Iron Islands", "Dorne", "The Vale", "The Reach", "The Riverlands", "The Crownlands", "The Stormlands", "The Westerlands", "The Neck", "Beyond the Wall"]
+    # CCCCC
 
     def start
-        puts "A WELCOME GUIDE TO THE NORTH"   
-        Api.fetch_houses
-        self.menu
+        puts "WELCOME TO WESTEROS" 
+        puts "\n" 
+        puts "If you're going to play the GoT, you need to know the teams."
+        sleep(1)
+        puts "Tell me-- which of the below regions are you interested in laying down roots? (enter number 1-10)"
+        self.display_regions # display regions - AAAAA
+        user_input_region = self.regions_input # user inputs - BBBBB
+        query = Cli.regions[user_input_region] # checks validity - CCCCC
+        Api.new(query) # Api.rb new instance/query
+        display_houses # DDDDD
+        #self.menu
     end
 
-    def menu
-        puts "\n" 
-        puts "Would you like to meet some potential allies? (type yes or no)"
+    def display_regions # AAAAA
+        @@regions.each_with_index {|region, index| puts "#{index + 1}. #{region}"}
+    end
+
+    def regions_input # BBBBB
+        region_input = gets.strip
+        number = selection_to_index(region_input) # DDDDD
+        until input.between?(0,9)
+            sleep(1)
+            puts "Please select a valid number."
+            self.regions_input # BBBBB
+        end
+    end
+
+    def display_houses   # EEEEE
+        puts "Would you like to meet some potential allies from there? (type yes or no)"
         user_input = gets.strip.downcase 
         if user_input == "yes"  
             puts "\n" 
@@ -19,31 +42,31 @@ class Cli
             puts "Let's take a look at some of the houses that are held in the highest regard."
             puts "Please choose by entering the number of the House you wish to explore:"
             puts "\n" 
-            display_list_of_houses
-            ask_user_for_house_choice
+            display_list_of_houses # FFFFF
+            ask_user_for_house_choice # GGGGG
             menu
         elsif          
             user_input == "no"
-            exit_program
+            exit_program # HHHHH
         else 
             sleep(1)
             puts "Please select a valid choice."
             menu
         end
-    end
+    end   
 
-    # def first_user_input
-    # end
-
-    # .each is best for printing out
-    def display_list_of_houses
+    def selection_to_index(input) # DDDDD
+        input.to_i - 1
+    end  
+ 
+    def display_list_of_houses # FFFFF
         House.all.each.with_index(1) do |house, index|  
             puts "#{index}. #{house.name}" 
         end
         puts "\n" 
     end
          
-   def ask_user_for_house_choice
+   def ask_user_for_house_choice # GGGGG
         house_input = gets.strip.to_i - 1 
         max = House.all.length - 1
         until house_input.between?(0,max) 
@@ -56,7 +79,7 @@ class Cli
         save_chosen_house(house_instance) 
     end
 
-    def  display_house_details(house) 
+    def display_house_details(house) 
         puts "\n" 
         puts "Name: " + house.name 
         puts "Region: " + house.region
@@ -70,20 +93,18 @@ class Cli
         puts house.ancestralWeapons[0] == "" ? "None on record." : house.ancestralWeapons.join(", ")
     end
 
-
     def save_chosen_house(house)
         puts "\n" 
         puts "Do you think you could be allies? (type yes or no)"
         puts "\n" 
         input = gets.strip.downcase
         if input == "yes"
-            @@all << house.name.to_s   
+            @@saved_houses << house.name.to_s   
             puts "\n" 
             puts "Excellent. I have saved this choice for you in your journal."
             puts "\n" 
         elsif input == "no"
-            @@all.delete(house.name)
-           # binding.pry
+            @@saved_houses.delete(house.name)
             puts "\n" 
             puts "Very well. Let's find you another House."
             puts "\n" 
@@ -94,20 +115,15 @@ class Cli
         end
     end
 
-    # def remove_house(house)
-    #     @@all.delete(house)  # NEEDS MORE WORK
-        
-    # end
- 
-    def exit_program
-        if @@all.empty?
+    def exit_program # HHHHH
+        if @@saved_houses.empty?
             puts "\n" 
             puts "Farewell, then. With no allies, I expect you'll be dead in less than a fortnight."
             exit
         else 
             puts "You have chosen the following houses as your allies:"
             sleep(1)
-            puts @@all.uniq
+            puts @@saved_houses.uniq
             puts "\n" 
             sleep(1)
             puts "Now go forth and introduce yourself. Good luck!"
@@ -117,11 +133,16 @@ class Cli
     end
 
     # def self.clear # was on house.rb
-    #     @@all.clear
+    #     @@saved_houses.clear
     # end
 
-
+#binding.pry
 end
+    
 
-# find_by_name
-#   query
+
+    # def self.all
+    #     @@regions
+    # end
+
+ 
