@@ -62,11 +62,20 @@ class Cli
             until number.between?(0,8)
                 sleep(1)
                 puts "Please select a valid number."
-                input = gets.strip
+                number = gets.strip.to_i - 1
             end
-            input.to_i
+            number
         end
     end
+
+    # input = gets.strip
+    # max = House.all.length - 1 
+    # house_input = selection_to_index(input)        
+    # until house_input.between?(0,max) 
+    #     sleep(1)
+    #     puts "Please select a valid number."
+    #     house_input = gets.strip.to_i - 1
+    # end
    
     def display_houses   
         puts "\n"
