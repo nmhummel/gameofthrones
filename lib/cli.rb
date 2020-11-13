@@ -1,6 +1,6 @@
 class Cli
 
-    @@got_regions = ["Iron Islands", "Dorne", "The Vale", "The Reach", "The Riverlands", "The Crownlands", "The Stormlands", "The Westerlands", "The Neck", "Beyond the Wall"]
+    @@regions = ["Iron Islands", "Dorne", "The Vale", "The Reach", "The Riverlands", "The Crownlands", "The Stormlands", "The Westerlands"]
     # CCCCC
     @@saved_houses = []
 
@@ -9,42 +9,48 @@ class Cli
         puts "\n" 
         puts "If you're going to play the GoT, you need to know the teams."
         sleep(1)
-        puts "Tell me-- which of the below regions are you interested in laying down roots? (enter number 1-10)"
+        menu
+    end
+
+    def menu
         self.display_regions # display regions - AAAAA  -  ex. 2. Dorne
         index = self.regions_input # user inputs - BBBBB  -  ex. index = 2
-
-        #query = @@got_regions[index] # checks validity - CCCCC - ex. query = Dorne
-
+        query = @@regions[index] # checks validity - CCCCC - ex. query = Dorne
         api = Api.new(query) # Api.rb new instance/query
         api.create_houses
         display_houses # DDDDD
-        #self.menu
     end
 
-    def self.got_regions
-        @@got_regions
+    def self.regions
+        @@regions
     end
 
     def display_regions # AAAAA
-        @@got_regions.each_with_index {|region, index| puts "#{index + 1}. #{region}"}
+        House.clear_all
+        puts "Tell me-- which of the below regions are you interested in laying down roots? (enter number 1-8)"
+        @@regions.each_with_index {|region, index| puts "#{index + 1}. #{region}"}
+        puts "\n" 
     end
 
     def regions_input # BBBBB
         input = gets.strip 
-        number = selection_to_index(input) # DDDDD  
-        until number.between?(0,9)
-            sleep(1)
-            puts "Please select a valid number."
-            self.regions_input # BBBBB
+        if input == "exit"
+            exit_program
+        else
+            number = selection_to_index(input) # DDDDD  
+            until number.between?(0,7)
+                sleep(1)
+                puts "Please select a valid number."
+                self.regions_input # BBBBB
+            end
+            input.to_i
         end
     end
-
-    def selection_to_index(input) # DDDDD
-        input.to_i - 1
-    end  
-    
+   
     def display_houses   # EEEEE
-        puts "Would you like to meet some potential allies from there? (type yes or no)"
+        puts "\n"
+        puts "Would you like to meet some potential allies here, or would you like to try a different region? "
+        puts "(type 'yes' for allies, 'no' for a different region, or 'exit' to be on your way)"
         user_input = gets.strip.downcase 
         if user_input == "yes"  
             puts "\n" 
@@ -58,7 +64,10 @@ class Cli
             display_houses # EEEEE
         elsif          
             user_input == "no"
-            exit_program # HHHHH
+            menu #########################
+        elsif
+            user_input == "exit"
+            exit_program
         else 
             sleep(1)
             puts "Please select a valid choice."
@@ -66,14 +75,20 @@ class Cli
         end
     end   
  
+    ########## PROBLEM? #################
     def display_list_of_houses # FFFFF
-        House.all.each.with_index(1) {|house, index| puts "#{index}. #{house.name}"}
+        House.all.each.with_index(1) {|house, index| puts "#{index}. #{house.name}"} 
         puts "\n" 
     end
-         
-   def ask_user_for_house_choice # GGGGG
-        house_input = gets.strip
-        number = selection_to_index(house_input) # DDDDD
+    
+    def selection_to_index(input) # DDDDD
+        input.to_i - 1
+    end     
+
+    def ask_user_for_house_choice # GGGGG
+        input = gets.strip
+        max = House.all.length - 1 
+        house_input = selection_to_index(input) # DDDDD
         until house_input.between?(0,max) 
             sleep(1)
             puts "Please select a valid number."
@@ -100,7 +115,8 @@ class Cli
 
     def save_chosen_house(house) #JJJJJ
         puts "\n" 
-        puts "Do you think you could be allies? (type yes or no)"
+        puts "Do you think you could be allies?"
+        puts "(type 'yes' to add them to your list, 'no' to see more, or 'exit' to be on your way)"
         puts "\n" 
         input = gets.strip.downcase
         if input == "yes"
@@ -113,7 +129,13 @@ class Cli
             puts "\n" 
             puts "Very well. Let's find you another House."
             puts "\n" 
-            menu
+            puts "Type 'stay' to stay in this region, 'move' to go elsewhere, or 'exit' to be on your way."
+            input == "stay" ? display_houses : menu 
+        elsif input =="move"
+            House.clear_all
+            display_regions
+        elsif input =="exit"
+            exit_program
         else 
             puts "Please select a valid number."
             input = gets.strip.downcase
@@ -128,7 +150,7 @@ class Cli
         else 
             puts "You have chosen the following houses as your allies:"
             sleep(1)
-            puts @@saved_houses.uniq
+            puts @@saved_houses.uniq #+ " of " + @@saved_houses[1].to_s
             puts "\n" 
             sleep(1)
             puts "Now go forth and introduce yourself. Good luck!"
@@ -136,18 +158,4 @@ class Cli
         end
         return
     end
-
-    # def self.clear # was on house.rb
-    #     @@saved_houses.clear
-    # end
-
-#binding.pry
 end
-    
-
-
-    # def self.all
-    #     @@regions
-    # end
-
- 
