@@ -7,7 +7,7 @@ class Api
     end
 
     def fetch_houses
-        url = "https://www.anapioficeandfire.com/api/houses?pageSize=70&region=#{query}&hasSeats=true&hasWords=true"
+        url = "https://www.anapioficeandfire.com/api/houses?pageSize=70&region=#{query}&hasWords=true"
         uri = URI(url)
         response = Net::HTTP.get(uri) 
         JSON.parse(response) 
