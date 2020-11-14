@@ -15,7 +15,7 @@ class Cli
         puts "  ^^~~~^.   ^^~/,//,,,,,,,,,(_____  "
         puts "         ^.                   __. ^^^^^~~~.._        ^  "
         puts "           ^.     /^^       /^              _K=======II>  "
-        puts " Art by     ^^~.C   /     C     |   _..~~^^         v  "
+        puts " Art by     ^^~.C   /      C     |   _..~~^^         v  "
         puts "  Amthralyx      (  C~~~~~~(    C~~^^  "
         puts "                  | |       \   .  "
         puts "               / -' '-..    _|  |  "
@@ -60,28 +60,19 @@ class Cli
         else
             number = selection_to_index(input)
             until number.between?(0,8)
-                sleep(1)
                 puts "Please select a valid number."
                 number = gets.strip.to_i - 1
             end
             number
         end
     end
-
-    # input = gets.strip
-    # max = House.all.length - 1 
-    # house_input = selection_to_index(input)        
-    # until house_input.between?(0,max) 
-    #     sleep(1)
-    #     puts "Please select a valid number."
-    #     house_input = gets.strip.to_i - 1
-    # end
    
     def display_houses   
         puts "\n"
         puts "Would you like to meet some potential allies here, or would you like to try a different region? "
         puts "(type 'yes' for allies, 'no' for a different region, or 'exit' to be on your way)"
         puts "\n" 
+        sleep(1)
         user_input = gets.strip.downcase
         if user_input == "yes"  
             puts "\n" 
@@ -100,7 +91,6 @@ class Cli
             user_input == "exit"
             exit_program
         else 
-            sleep(1)
             puts "Please select a valid choice."
             display_houses 
         end
@@ -116,7 +106,6 @@ class Cli
         max = House.all.length - 1 
         house_input = selection_to_index(input)        
         until house_input.between?(0,max) 
-            sleep(1)
             puts "Please select a valid number."
             house_input = gets.strip.to_i - 1
         end
@@ -126,6 +115,7 @@ class Cli
     end
 
     def display_house_details(house)
+        sleep(1)
         puts "\n" 
         puts "Name: " + house.name 
         puts "Region: " + house.region
@@ -148,19 +138,32 @@ class Cli
         if input == "yes"
             @@saved_houses << house.name.to_s   
             puts "\n" 
+            sleep(1)
             puts "Excellent. I have saved this choice for you in your journal."
             puts "\n" 
+            change_regions
         elsif input == "no"
             @@saved_houses.delete(house.name)
             puts "\n" 
+            sleep(1)
             puts "Very well. Let's find you another House."
             puts "\n" 
-            puts "Type 'stay' to stay in this region, 'move' to go elsewhere, or 'exit' to be on your way." 
-            input == "stay" ? display_houses : display_list_of_houses 
-            
+            display_list_of_houses
+        else 
+            puts "Please select a valid number."
+            input = gets.strip.downcase
+        end
+    end
+
+   def change_regions
+        puts "Type 'stay' to stay in this region, 'move' to go elsewhere, or 'exit' to be on your way." 
+        input = gets.strip.downcase
+        if input == "stay" 
+            display_list_of_houses 
+            ask_user_for_house_choice
         elsif input =="move"
             House.clear_all
-            display_regions
+            menu
         elsif input =="exit"
             exit_program
         else 
@@ -173,7 +176,7 @@ class Cli
         if @@saved_houses.empty?
             puts "\n" 
             puts "Farewell, then. With no allies, I expect you'll be dead in less than a fortnight."
-            puts "\n" # new line
+            puts "\n" 
             sleep(2)
             puts "                               __   "
             puts "                            .d$$b   "
@@ -209,6 +212,7 @@ class Cli
             puts "\n" 
             sleep(1)
             puts "Now go forth and introduce yourself. Good luck!"
+            sleep(1)
             exit
         end
         return
