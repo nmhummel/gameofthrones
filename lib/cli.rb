@@ -17,7 +17,7 @@ class Cli
         puts "           ^.     /^^       /^              _K=======II>  "
         puts " Art by     ^^~.C   /      C     |   _..~~^^         v  "
         puts "  Amthralyx      (  C~~~~~~(    C~~^^  "
-        puts "                  | |       \   .  "
+        puts "                  | |       |   |.  "
         puts "               / -' '-..    _|  |  "
         puts "              ' /'       ././'  '--.  "
         puts "=================WELCOME TO WESTEROS====================" 
@@ -150,7 +150,7 @@ class Cli
             puts "\n" 
             display_list_of_houses
         else 
-            puts "Please select a valid number."
+            puts "Please select a valid choice."
             input = gets.strip.downcase
         end
     end
@@ -167,7 +167,7 @@ class Cli
         elsif input =="exit"
             exit_program
         else 
-            puts "Please select a valid number."
+            puts "Please select a valid choice."
             input = gets.strip.downcase
         end
     end
@@ -208,7 +208,7 @@ class Cli
         else 
             puts "You have chosen the following houses as your allies:"
             sleep(1)
-            puts @@saved_houses.uniq # of Region
+            puts @@saved_houses.uniq 
             puts "\n" 
             sleep(1)
             puts "Now go forth and introduce yourself. Good luck!"
@@ -217,10 +217,5 @@ class Cli
         end
         return
     end
-
-    def self.regions
-        @@regions
-    end
-
 
 end

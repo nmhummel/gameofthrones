@@ -20,5 +20,3 @@ class Api
     end
 
 end
-
-#     url = "https://www.anapioficeandfire.com/api/houses?pageSize=70&region=the%20north&hasSeats=true&hasWords=true"
