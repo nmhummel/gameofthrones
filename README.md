@@ -12,10 +12,8 @@ Once that is complete, enter 'ruby bin/start' into terminal and let the program 
 
 
 Copyright
-~~~ BIG THANK YOU TO *Joakim Skoog* FOR CREATING "An API of Ice And Fire" (https://www.anapioficeandfire.com/) ~~~
-The A Song of Ice And Fire series and its data is the property of George R.R. Martin. The data is used without claim of ownership.
-All data has been collected from open free sources such as A Wiki of Ice and Fire and has then been normalized and cleaned.
-This project uses a BSD license.
+BIG THANK YOU TO *Joakim Skoog* FOR CREATING "An API of Ice And Fire" (https://www.anapioficeandfire.com/)
+The A Song of Ice And Fire series and its data is the property of George R.R. Martin. The data is used without claim of ownership. All data has been collected from open free sources such as A Wiki of Ice and Fire and has then been normalized and cleaned. The API uses a BSD license.
 
 
 License
